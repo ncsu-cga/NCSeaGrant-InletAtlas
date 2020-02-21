@@ -11,7 +11,7 @@ require([
 ) {
     const inletsLyrUrl = 'http://services1.arcgis.com/aT1T0pU1ZdpuDk1t/arcgis/rest/services/inlets/FeatureServer/0';
     const webmapId = '55a5665980564cfd828151e59d8ad467';
-    
+
     function inletsLayerSwipe(webmapId) {
       let params = {
         map: null,

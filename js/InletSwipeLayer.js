@@ -74,7 +74,8 @@ define([
 
       startup: function () {
         this.map.graphics.enableMouseEvents();
-        let inletsLyrUrl = 'http://services1.arcgis.com/aT1T0pU1ZdpuDk1t/arcgis/rest/services/inlets/FeatureServer/0';
+        // let inletsLyrUrl = 'http://services1.arcgis.com/aT1T0pU1ZdpuDk1t/arcgis/rest/services/inlets/FeatureServer/0';
+        let inletsLyrUrl = 'https://services1.arcgis.com/aT1T0pU1ZdpuDk1t/arcgis/rest/services/Inlets/FeatureServer/0';
         this.inletsLayer = new FeatureLayer(inletsLyrUrl, {
           mode: FeatureLayer.MODE_ONDEMAND,
           outFields: ['InletName'],
