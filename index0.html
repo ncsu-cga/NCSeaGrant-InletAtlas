@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="description" content="Calcite Maps Demo - ArcGIS">
+  <link rel="icon" href="favicon.ico">
+  <title>NC Inlet Atlas - Map</title>
+
+  <!-- Calcite Maps Bootstrap -->
+  <link rel="stylesheet" href="./dist/css/calcite-maps-bootstrap.min-v0.4.css">
+
+  <!-- Calcite Maps -->
+  <link rel="stylesheet" href="./dist/css/calcite-maps-arcgis-4.x.min-v0.4.css">
+
+  <!-- ArcGIS JS 3 -->
+  <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/themes/calcite/dijit/calcite.css">
+
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body class="calcite-maps calcite-nav-top">
+
+  <!-- Navbar -->
+
+  <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark calcite-bgcolor-dark-blue">
+    <!-- Title -->
+    <div class="calcite-title calcite-overflow-hidden">
+      <span class="calcite-title-main" style="padding-left: 50px;">NC Sea Grant</span>
+      <span class="calcite-title-divider hidden-xs"></span>
+      <span class="calcite-title-sub hidden-xs">Shifting Shorelines: Inlet Atlas</span>
+    </div>
+    <!-- Nav -->
+    <ul class="calcite-nav nav navbar-nav">
+      <!-- <li><a role="tab" data-toggle="collapse" data-target="#panelInletsInfo" aria-haspopup="true"><span class="esri-icon-description"></span> Inlet Info</a></li> -->
+      <li>
+        <a role="tab" data-toggle="collapse" data-target="#panelLayerSwipe" aria-haspopup="true" style="margin-right: 50px;">
+          <span class="esri-icon-maps"></span> Layer Swipe Tool</a>
+      </li>
+      <li>
+          <a href="./terminology.html" target="_blank" style="margin-right: 100px;">
+            <span class="esri-icon-link"></span> Tidal Inlet Terminology
+          </a>
+        </li>
+    </ul>
+  </nav>
+  <!--/.navbar -->
+
+  <!-- Panel Container -->
+
+  <div class="calcite-panels calcite-panels-right calcite-bg-custom calcite-text-light calcite-bgcolor-dark-blue panel-group"
+    role="tablist" aria-multiselectable="true" style="z-index: 35;">
+
+    <div id="panelLayerSwipe" class="panel collapse in">
+      <div id="headingLayerSwipe" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle collapsed in" role="button" data-toggle="collapse" href="#collapseLayerSwipe" aria-expanded="false"
+            aria-controls="collapseLayerSwipe">
+            <span class="esri-icon-maps" aria-hidden="true"></span>
+            <span class="panel-label">Layer Swipe Tool</span>
+          </a>
+          <a id="layerSwipeClose" class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelLayerSwipe">
+            <span class="esri-icon esri-icon-close" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+      <!-- <div id="collapseLayerSwipe" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingLayerSwipe"> -->
+      <div id="collapseLayerSwipe" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingLayerSwipe">
+        <div class="panel-body">
+
+          <div class="calcite-form-title">Select the inlet</div>
+          <div class="form-horizontal calcite-form-padding">
+            <div class="form-group">
+              <label for="inletNames" class="col-xs-2 control-label">Inlet:</label>
+              <div class="col-xs-10">
+                <select id="inletNames" class="form-control">
+                  <option selected disabled>Choose one</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <div class="col-xs-offset-3 col-xs-10 btn-block">
+                <button id="infoBtn" type="button" class="btn btn-success" style="white-space: normal;" value="hide">Open/Close Inlet Notes</button>
+              </div>
+            </div>
+            <!-- </div> -->
+
+            <div class="calcite-form-title" style="padding-top: 0;">Set swiping direction</div>
+            <!-- <div class="form-horizontal calcite-form-padding"> -->
+            <div class="form-group">
+              <div class="col-xs-offset-1 col-xs-10">
+                <label for="#verticalSwipe" class="checkbox-inline">
+                  <input type="radio" id="verticalSwipe" name="swipeDirectionRadio" value="vertical" checked="checked"> Vertical
+                </label>
+                <label for="#horizontalSwipe" class="checkbox-inline">
+                  <input type="radio" id="horizontalSwipe" name="swipeDirectionRadio" value="horizontal"> Horizontal
+                </label>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <label id="swipeLyrLabel" for="swipeLyr" class="col-xs-2 control-label">Left:</label>
+              <div class="col-xs-10">
+                <select id="swipeLyrs" class="form-control">
+                  <option selected disabled>Choose one</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label id="underLyrLabel" for="underLyrs" class="col-xs-2 control-label">Right:</label>
+              <div class="col-xs-10">
+                <select id="underLyrs" class="form-control">
+                  <option selected disabled>Choose one</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.calcite-panels -->
+
+  <!-- Map Container  -->
+  <div id="textDrawer" class="sidedrawer" style="overflow-y: hidden;">
+    <a id="textDrawerClose" style="float: right; padding-right: 20px;">
+      <span style="cursor: pointer;" class="esri-icon-close"></span>
+    </a>
+    <!-- <div id="inletDesc" style="padding: 50px 50px 50px 50px;"></div> -->
+    <div style="height: calc(100% - 60px);">
+      <iframe id="inletDesc" src="./desc/Introduction.html" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+    </div>
+  </div>
+
+  <div id="map" style="height: 100%; position: relative;">
+    <div id="HomeButton"></div>
+    <div id="swipeDiv"></div>
+  </div>
+
+
+  <!-- Splash -->
+  <div id="splash" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #257edd;">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button" style="color: white;">
+            <span aria-hidden="true">x</span>
+          </button>
+          <h4 class="modal-title" style="color: white;"><strong>Shifting Shorelines: Inlet Atlas</strong></h4>
+        </div>
+        <div class="modal-body" style="font-size: 14px;">
+          <p>North Carolina’s coastal history is closely tied to changes in its barrier islands — and to the inlets that link
+            protected sounds to the open ocean.</p>
+          </br>
+          <p>Each year during hurricane season and on into the winter nor’easters, coastal residents and geologists alike ponder
+            the possibility: Will a storm move enough water to cut a new inlet, or enough sand to close an existing one?</p>
+          </br>
+          <p>Since the initial publication in 1999 of Shifting Shorelines: A Pictorial Atlas of North Carolina Inlets, many
+            significant changes have occurred within the NC inlet systems and along the adjacent shorelines. The major natural
+            changes include the closure of three inlets — Old Topsail, New and Mad — while anthropogenic-related changes
+            include the relocation of an entire inlet, Mason Inlet, and the realignment/relocation of all or a portion of
+            the ebb channel at three inlets — Bogue, Cape Fear and Shallotte.</p>
+          </br>
+          <p>Here we tour the inlets, from Oregon Inlet south to Mad Inlet, using select imagery from 1993 to 2014.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+  <script>
+    //var dojoConfig = { // paths: { js: location.pathname.replace(/\/[^/]+$/, "") + "./js" } // }; 
+
+    var package_path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+    var dojoConfig = {
+      // The locationPath logic below may look confusing but all its doing is
+      // enabling us to load the api from a CDN and load local modules from the correct location.
+      packages: [{
+        name: "application",
+        location: package_path + '/js'
+      }]
+    };
+  </script>
+
+  <!-- ArcGIS JS 4 -->
+  <script src="https://js.arcgis.com/3.21/"></script>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- jQuery (for Bootstrap's JavaScript plugins). NOTE: You can also use pure Dojo. See examples. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all  plugins or individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
+
+  <!-- Calcite Maps -->
+  <script src="../../dist/js/jquery/calcitemaps-v0.4.js"></script>
+
+  <script src="./js/index0.js"></script>
+</body>
+
+</html>
