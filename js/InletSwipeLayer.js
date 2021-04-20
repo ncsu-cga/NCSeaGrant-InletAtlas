@@ -14,6 +14,7 @@ define([
     "esri/graphic",
     "esri/geometry/Extent",
     "esri/SpatialReference",
+    "esri/geometry/Point",
 
     "dojo/on",
     "dojo/dom",
@@ -37,6 +38,7 @@ define([
     Graphic,
     Extent,
     SpatialReference,
+    Point,
     on,
     dom,
     query,
@@ -106,7 +108,6 @@ define([
             return feature;
           });
         }).then(response => {
-          // console.log('inlet res', response);
           this.inlets = response;
         });
 
@@ -201,7 +202,7 @@ define([
 
         this.inletsLayer.on('click', evt => {
           // console.log('clicked');
-          // console.log(evt);
+          console.log(evt);
           let inletName = evt.graphic.attributes.InletName;
           //evt.graphic.attributes.InletName
           highlightLayer.clear();
@@ -224,19 +225,24 @@ define([
 
         on(dom.byId('inletNames'), 'click', evt => {
           let selectedInlet = evt.target.value;
+          console.log(selectedInlet);
           highlightLayer.clear();
-          this.inlets.features.map(item => {
-            if (selectedInlet === 'Mason Inlet') {
-              let sr = new SpatialReference({ wkid: 102100 });
-              let masonExtent = new Extent(-8662339.382528545, 4058503.6983121624, 
-                -8652555.442907786, 4063156.802409145, sr);
-              this.map.setExtent(masonExtent);
-            }
-            if (item.attributes.InletName === selectedInlet) {
-              this.map.centerAndZoom(item.geometry, 14);
-            } 
-            this._appendInletInfo(selectedInlet);
-          });
+          if (selectedInlet != '-1') {
+            this.inlets.features.map(item => {
+              if (selectedInlet === 'Mason Inlet') {
+                let sr = new SpatialReference({ wkid: 102100 });
+                let masonExtent = new Extent(-8662339.382528545, 4058503.6983121624, 
+                  -8652555.442907786, 4063156.802409145, sr);
+                this.map.setExtent(masonExtent);
+              }
+              if (item.attributes.InletName === selectedInlet) {
+                this.map.centerAndZoom(item.geometry, 14);
+              } 
+              this._appendInletInfo(selectedInlet);
+            });
+          }
+
+
         });
 
         on(dom.byId('infoBtn'), 'click', evt => {

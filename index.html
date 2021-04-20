@@ -10,16 +10,16 @@
   <title>NC Inlet Atlas - Map</title>
 
   <!-- Calcite Maps Bootstrap -->
-  <link rel="stylesheet" href="./dist/css/calcite-maps-bootstrap.min-v0.4.css">
+  <link rel="stylesheet" type="text/css" href="./dist/css/calcite-maps-bootstrap.min-v0.4.css"/>
 
   <!-- Calcite Maps -->
-  <link rel="stylesheet" href="./dist/css/calcite-maps-arcgis-4.x.min-v0.4.css">
+  <link rel="stylesheet" type="text/css" href="./dist/css/calcite-maps-arcgis-4.x.min-v0.4.css"/>
 
   <!-- ArcGIS JS 3 -->
-  <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
-  <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/themes/calcite/dijit/calcite.css">
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21/esri/css/esri.css"/>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21/esri/themes/calcite/dijit/calcite.css"/>
 
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="./css/style.css"/>
 </head>
 
 <body class="calcite-maps calcite-nav-top">
@@ -77,7 +77,7 @@
               <label for="inletNames" class="col-xs-2 control-label">Inlet:</label>
               <div class="col-xs-10">
                 <select id="inletNames" class="form-control">
-                  <option selected disabled>Choose one</option>
+                  <option selected disabled value="-1">Choose one</option>
                 </select>
               </div>
 
@@ -192,8 +192,9 @@
     };
   </script>
 
-  <!-- ArcGIS JS 4 -->
+  <!-- ArcGIS JS 3 -->
   <script src="https://js.arcgis.com/3.21/"></script>
+<!--?  <script src="https://js.arcgis.com/3.21/"></script>-->
 
   <!-- Bootstrap core JavaScript
   ================================================== -->
@@ -207,7 +208,7 @@
   <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
 
   <!-- Calcite Maps -->
-  <script src="../../dist/js/jquery/calcitemaps-v0.4.js"></script>
+  <script src="./dist/js/jquery/calcitemaps-v0.4.js"></script>
 
   <script src="./js/index.js"></script>
 </body>
